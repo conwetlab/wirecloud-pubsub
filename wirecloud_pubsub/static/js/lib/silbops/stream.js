@@ -1,15 +1,15 @@
-(function() {
-    // SilboPS Namespace
-    if (window.SilboPS === undefined) {
-        SilboPS = {};
-
+// SilboPS Namespace
+if (window.SilboPS === undefined) {
+    window.SilboPS = {};
 }
 
-SilboPS.Stream = function Stream () {
-    this._id = null;
-    this._eventSource = null;
-};
-Events.extend(SilboPS.Stream.prototype);
+(function(SilboPS) {
+
+    SilboPS.Stream = function Stream () {
+        this._id = null;
+        this._eventSource = null;
+    };
+    Events.extend(SilboPS.Stream.prototype);
     SilboPS.Stream.brokerUri = '/silbops/CometAPI';
 
     SilboPS.Stream.prototype.whenReady = function whenReady(handler) {
@@ -69,4 +69,4 @@ Events.extend(SilboPS.Stream.prototype);
         this.clearHandlers();
         SilboPS.stopKeepAlive();
     };
-})();
+})(window.SilboPS);

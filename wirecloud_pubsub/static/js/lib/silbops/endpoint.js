@@ -1,8 +1,9 @@
-(function() {
-    // SilboPS Namespace
-    if (window.SilboPS === undefined) {
-        window.SilboPS = {};
-    }
+// SilboPS Namespace
+if (window.SilboPS === undefined) {
+    window.SilboPS = {};
+}
+
+(function(SilboPS) {
 
     SilboPS.EndPoint = function EndPoint (handlers, type) {
 
@@ -53,4 +54,4 @@
 
         SilboPS.disconnect(this);
     };
-})();
+})(SilboPS);

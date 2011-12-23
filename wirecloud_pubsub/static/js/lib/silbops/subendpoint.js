@@ -1,14 +1,16 @@
-var SubEndPoint;
+// SilboPS Namespace
+if (window.SilboPS === undefined) {
+    window.SilboPS = {};
+}
 
-(function() {
-    // SilboPS Namespace
-    if (SilboPS === undefined) {
-        SilboPS = {};
-    }
+(function(SilboPS) {
 
     SilboPS.SubEndPoint = function SubEndPoint(handlers) {
 
-        SilboPS.EndPoint.call(this, handlers, 'SUBSCRIBER');
+        if (arguments.length != 0) {
+
+            SilboPS.EndPoint.call(this, handlers, 'SUBSCRIBER');
+        }
     }
 
     SilboPS.SubEndPoint.prototype = new SilboPS.EndPoint();
@@ -27,4 +29,4 @@ var SubEndPoint;
     // addNotificationListener(NotificationListener)
     // removeNotificationListener(NotificationListener)
     // sendFeedback(N msg, N feedback)
-})();
+})(window.SilboPS);
