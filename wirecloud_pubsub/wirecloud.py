@@ -1,10 +1,11 @@
 from ezweb.plugins import WirecloudPlugin
+from wirecloud_pubsub import VERSION
 
 
 class PubSubPlugin(WirecloudPlugin):
 
     features = {
-        'PubSub': '0.1'
+        'PubSub': '.'.join(VERSION),
     }
 
     def get_scripts(self, view):
