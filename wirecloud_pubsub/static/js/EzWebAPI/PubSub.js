@@ -25,6 +25,11 @@ EzWebAPI.SilboPS = (function () {;
         enumerable: true
     });
 
+    Object.defineProperty(API, 'Filter', {
+        value: PubSubManager.Filter,
+        enumerable: true
+    });
+
     return API;
 })();
 Object.defineProperty(EzWebAPI, 'SilboPS', {value: EzWebAPI.SilboPS});

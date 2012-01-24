@@ -1,120 +1,158 @@
+//var filtro1 = {
+//    "attr1": [{"eq": ["str", "val1"]}],
+//    "attr2": []
+//};
+// SilboPS Namespace
+if (window.SilboPS === undefined) {
+    window.SilboPS = {};
+}
 
-var filtro1 = {
-    "attr1": [{"eq": ["str", "val1"]}],
-    "attr2": []
-};
 
+(function(SilboPS) {
 
-/*var OPERATORS = [
-    'exists',
+    var operatorList = [
+    //'exists', these are handled separately
     'eq',
     'ne',
     'gt',
     'ge',
     'lt',
     'le',
-    'prefix',
-    'suffix',
+    //    'prefix',
+    //    'suffix',
     'contains'
-];*/
+    ];
 
-var Operator = {};
-Operator.EQ = {
-    acceptsType: function() {
-        return true;
-    },
-    toString: function() {
-        return "eq";
-    }
-}
-
-
-function Value(value) {
-    this.value = value;
-}
-
-Value.prototype.toJSON = function toJSON() {
-    var type = typeof this.value;
-    
-    if (type === "string") {
-        return ["str", this.value];
-    }
-    if (type === "number") {
-        return ["num", this.value];
+    var Operator = {};
+    Operator.EQ = {
+        acceptsType: function() {
+            return true;
+        },
+        toString: function() {
+            return "eq";
+        }
     }
 
-    throw new TypeError("Invalid value type");
-}
 
-
-function Constraint(operator, value) {
-    this.value = new Value(value);
-    this.operator = operator;
-}
-
-Constraint.prototype.toJSON = function toJSON() {
-    var obj = {};
-    obj[this.operator.toString()] = this.value;
-    return obj;
-};
-
-Constraint.exist = (function () {
-    var constraint_exist = new Constraint("exist", null);
-    constraint_exist.toJSON = function toJSON() {
-        return [];
+    function Value(value) {
+        this.value = value;
     }
 
-    return function exist() {
-        return constraint_exist;
+    Value.prototype.toJSON = function toJSON() {
+
+        var label = null;
+
+        switch(typeof this.value) {
+
+            case "string": {
+                label = "str";
+                break;
+            }
+            case "number": { // to differentiate between int and float (double)
+                label = (this.value == parseInt(this.value, 10)) ? "int" : "float";
+                break;
+            }
+            default:
+                throw new TypeError("Invalid value type");
+        }
+
+        return [label, this.value];
+    };
+
+
+    function Constraint(operator, value) {
+        this.value = new Value(value);
+        this.operator = operator;
     }
-})();
 
-Constraint.eq = function eq(value) {
-    return new Constraint("eq", value);
-};
+    Constraint.prototype.toJSON = function toJSON() {
+        var obj = {};
+        obj[this.operator.toString()] = this.value;
+        return obj;
+    };
 
+    Constraint.exist = (function () {
 
+        var constraint_exist = new Constraint("exist", null);
+        constraint_exist.toJSON = function toJSON() {
+            return [];
+        }
 
-function Filter() {
-    this.attributes = {};
-}
-Filter.prototype.addConstraint = function addConstraint(attribute, constraint) {
-    if (this.attributres[attribute]) {
-        this.attributres[attribute] = [];
+        return function exist() {
+            return constraint_exist;
+        }
+    })();
+
+    SilboPS.Filter = function Filter() {
+        this.attributes = {};
     }
-    this.attributres[attribute].push(constraint);
-};
-Filter.prototype.toJSON = function toJSON() {
-    return Object.clone(this.attributes);
-};
-(function() {
-    Filter.prototype.constrain = function constrain(attribute) {
+
+    SilboPS.Filter.prototype.addConstraint = function addConstraint(attribute, constraint) {
+
+        if (!this.attributes[attribute]) {
+
+            this.attributes[attribute] = [];
+        }
+
+        if (constraint.operator != "exist") {
+            this.attributes[attribute].push(constraint);
+        }
+    };
+
+    SilboPS.Filter.prototype.toJSON = function toJSON() {
+        return Object.clone(this.attributes);
+    };
+
+    SilboPS.Filter.prototype.constrain = function constrain(attribute) {
+
         return new ConstraintBuilder(this, attribute);
     };
 
     function ConstraintBuilder(filter, attribute) {
-        this.filter = filter;
+
+        this._filter = filter;
         this.constrain(attribute);
     }
 
     ConstraintBuilder.prototype.filter = function filter() {
-        return this.filter;
+
+        return this._filter;
     };
 
     ConstraintBuilder.prototype.constrain = function constrain(attribute) {
-        this.attribute = attribute;
+
+        this._attribute = attribute;
         return this;
     };
 
-    ConstraintBuilder.prototype.exists = function exists() {
-        this.filter.addConstraint(attribute, Constraint.exist());
+    ConstraintBuilder.prototype.exist = function exist() {
+
+        this._filter.addConstraint(this._attribute, Constraint.exist());
         return this;
     };
 
-    ConstraintBuilder.prototype.eq = function eq(value) {
-        this.filter.addConstraint(attribute, Constraint.eq(value));
+    ConstraintBuilder.prototype.startsWith = function startsWith(value) {
+
+        this._filter.addConstraint(this._attribute, new Constraint("prefix", value));
         return this;
     };
-});
 
+    ConstraintBuilder.prototype.endsWith = function endsWith(value) {
 
+        this._filter.addConstraint(this._attribute, new Constraint("suffix", value));
+        return this;
+    };
+
+    // create all the constraints
+    for (var i = 0; i < operatorList.length; i++) {
+
+        (function(name) {
+
+            ConstraintBuilder.prototype[name] = function (value) {
+
+                this._filter.addConstraint(this._attribute, new Constraint(name, value));
+                return this;
+            };
+        })(operatorList[i]);
+    }
+})(window.SilboPS);

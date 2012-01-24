@@ -17,6 +17,7 @@ class PubSubPlugin(WirecloudPlugin):
             'js/lib/silbops/stream.js',
             'js/lib/silbops/silbops.js',
             'js/lib/silbops/eventsource.js',
+            'js/lib/silbops/filter.js',
             'js/pubsub/PubSubManager.js',
         )
 

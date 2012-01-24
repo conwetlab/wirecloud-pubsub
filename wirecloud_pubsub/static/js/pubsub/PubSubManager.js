@@ -37,11 +37,15 @@ var PubSubManager = (function(opmanager, SilboPS) {
     SubEndPoint.prototype = new SilboPS.SubEndPoint();
 
     Object.defineProperty(Manager, 'PubEndPoint', {
-        value: PubEndPoint,
+        value: PubEndPoint
     });
 
     Object.defineProperty(Manager, 'SubEndPoint', {
-        value: SubEndPoint,
+        value: SubEndPoint
+    });
+
+    Object.defineProperty(Manager, 'Filter', {
+        value: SilboPS.Filter
     });
 
     /*
