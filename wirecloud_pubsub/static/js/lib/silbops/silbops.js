@@ -6,6 +6,12 @@ if (window.SilboPS === undefined) {
 (function(SilboPS) {
     Events.extend(SilboPS);
 
+	// to work with cross-window objects
+	SilboPS.__getInternalClass = function __getInternalClass(object) {
+
+		return Object.prototype.toString.call(object).match(/^\[object\s(.*)\]$/)[1];
+	}
+
     SilboPS.connections = {};
     SilboPS._stream = new SilboPS.Stream();
 
@@ -120,12 +126,12 @@ if (window.SilboPS === undefined) {
         var endpoint = SilboPS.connections[endPoint.endpointid];
         var action = toAdvertise ? 'advertise' : 'unadvertise';
 
-        if (!(advertise instanceof Object)) {
+        if (SilboPS.__getInternalClass(advertise) !== 'Object') {
             throw new TypeError('advertise must be an object');
         }
 
         for (var key in advertise) {
-            if (!(advertise[key] instanceof Array)) {
+            if (SilboPS.__getInternalClass(advertise[key]) !== 'Array') {
                 throw new TypeError('advertise must contain arrays as attribute values');
             }
         }
