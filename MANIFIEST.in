@@ -1,1 +1,0 @@
-recursive-exclude wirecloud_pubsub *.py[co]

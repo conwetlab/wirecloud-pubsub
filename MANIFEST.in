@@ -1,0 +1,3 @@
+include README.rst
+recursive-include wirecloud_pubsub *
+recursive-exclude wirecloud_pubsub *.py[co]
