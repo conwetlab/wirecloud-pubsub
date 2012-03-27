@@ -23,11 +23,11 @@ for dirpath, dirnames, filenames in os.walk('wirecloud_pubsub'):
 data_files.append(('wirecloud_pubsub', ('README.rst',)))
 
 # Dynamically calculate the version based on wirecloud_pubsub.VERSION.
-version = __import__('wirecloud_pubsub').VERSION
+version = '.'.join(map(str, __import__('wirecloud_pubsub').VERSION))
 
 setup(
     name='wirecloud-pubsub',
-    version='0.1',
+    version=version,
     description='Wirecloud plugin providing PubSub support.',
     long_description=open(os.path.join(ROOT, 'README.rst')).read(),
     author='CoNWeT Lab',
