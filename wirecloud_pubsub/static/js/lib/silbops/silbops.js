@@ -69,7 +69,8 @@ if (window.SilboPS === undefined) {
             var message = JSON.parse(data.message);
 
             // handler dispatching
-            endpoint.fire(message['type'], message['message'], this);
+			// Using toLowerCase() for enum compatibility
+            endpoint.fire(message['type'].toLowerCase(), message['message'], this);
         }
     };
 
