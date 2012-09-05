@@ -8,6 +8,10 @@ Requirements
 Installation
 ------------
 
+You can get wirecloud-pubsub from PyPI with... ::
+
+    # pip install wirecloud-pubsub
+
 Since *wirecloud_pubsub* uses django.contrib.static functionalities, you should
 add it to your ``INSTALLED_APPS`` in ``settings.py``: ::
 
