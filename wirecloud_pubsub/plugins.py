@@ -1,11 +1,11 @@
 from wirecloud.plugins import WirecloudPlugin
-from wirecloud_pubsub import VERSION
+import wirecloud_pubsub
 
 
 class PubSubPlugin(WirecloudPlugin):
 
     features = {
-        'PubSub': '.'.join(map(str, VERSION)),
+        'PubSub': wirecloud_pubsub.__version__,
     }
 
     def get_scripts(self, view):
