@@ -21,13 +21,18 @@ add it to your ``INSTALLED_APPS`` in ``settings.py``: ::
         ...
     )
 
-Also you have to add it to your ``WIRECLOUD_PLUGINS``: ::
+You also have to add it to your ``WIRECLOUD_PLUGINS``: ::
 
     WIRECLOUD_PLUGINS = (
         ...
         'wirecloud_pubsub.wirecloud.PubSubPlugin',
         ...
     )
+
+As last step, add a ``DEFAULT_SILBOPS_BROKER`` setting with the URL of the
+broker to use: ::
+
+    DEFAULT_SILBOPS_BROKER = 'http://pubsub.server.com:8080/silbops/CometAPI'
 
 Don't forget to run the collectstatic and compress commands on your Wirecloud
 installation: ::

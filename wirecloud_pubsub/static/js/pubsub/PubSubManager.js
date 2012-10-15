@@ -66,6 +66,7 @@ var PubSubManager = (function(opmanager, SilboPS) {
 
     opmanager.listen('igadget_unload', unload_gadget);
     */
+    SilboPS.Stream.brokerUri = Wirecloud.URLs.DEFAULT_SILBOPS_BROKER;
 
     return Manager;
 })(OpManagerFactory.getInstance(), SilboPS);
