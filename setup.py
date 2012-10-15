@@ -20,12 +20,11 @@ for dirpath, dirnames, filenames in os.walk('wirecloud_pubsub'):
     if '__init__.py' not in filenames:
         data_files.append([dirpath, [os.path.join(dirpath, f) for f in filenames]])
 
-# Dynamically calculate the version based on wirecloud_pubsub.VERSION.
-version = __import__('wirecloud_pubsub').VERSION
+data_files.append(('wirecloud_pubsub', ('README.rst',)))
 
 setup(
     name='wirecloud-pubsub',
-    version='0.1',
+    version=wirecloud_pubsub.__version__,
     description='Wirecloud plugin providing PubSub support.',
     long_description=open(os.path.join(ROOT, 'README.rst')).read(),
     author='CoNWeT Lab',
@@ -33,6 +32,7 @@ setup(
     url='http://github.com/conwetlab/wirecloud-pubsub',
     license='EUPL 1.1',
     packages=('wirecloud_pubsub',),
+    include_package_data=True,
     data_files=data_files,
     install_requires=('Django',),
     tests_require=('Django',),

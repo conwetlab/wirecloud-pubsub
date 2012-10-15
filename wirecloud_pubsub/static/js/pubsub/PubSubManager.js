@@ -15,22 +15,28 @@ var PubSubManager = (function(opmanager, SilboPS) {
     };
 
     var PubEndPoint = function (iGadgetId) {
+        var args, iGadgetId;
+
         if (arguments.length == 0) {
             return;
         }
 
-        var args = Array.prototype.slice.call(arguments, 1);
+        iGadgetId = arguments[0];
+        args = Array.prototype.slice.call(arguments, 1);
         SilboPS.PubEndPoint.apply(this, args);
         register_endpoint(iGadgetId, this);
     };
     PubEndPoint.prototype = new SilboPS.PubEndPoint();
 
     var SubEndPoint = function () {
+        var args, iGadgetId;
+
         if (arguments.length == 0) {
             return;
         }
 
-        var args = Array.prototype.slice.call(arguments, 1);
+        iGadgetId = arguments[0];
+        args = Array.prototype.slice.call(arguments, 1);
         SilboPS.SubEndPoint.apply(this, args);
         register_endpoint(iGadgetId, this);
     };

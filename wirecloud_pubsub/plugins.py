@@ -1,11 +1,11 @@
-from ezweb.plugins import WirecloudPlugin
-from wirecloud_pubsub import VERSION
+from wirecloud.plugins import WirecloudPlugin
+import wirecloud_pubsub
 
 
 class PubSubPlugin(WirecloudPlugin):
 
     features = {
-        'PubSub': '.'.join(VERSION),
+        'PubSub': wirecloud_pubsub.__version__,
     }
 
     def get_scripts(self, view):
@@ -21,7 +21,7 @@ class PubSubPlugin(WirecloudPlugin):
             'js/pubsub/PubSubManager.js',
         )
 
-    def get_gadget_api_extensions(self, view):
+    def get_widget_api_extensions(self, view):
         return (
-            'js/EzWebAPI/PubSub.js',
+            'js/WirecloudAPI/PubSub.js',
         )
