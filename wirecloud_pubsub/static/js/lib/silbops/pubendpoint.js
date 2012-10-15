@@ -6,7 +6,7 @@ if (window.SilboPS === undefined) {
 (function(SilboPS) {
 
     SilboPS.PubEndPoint = function PubEndPoint(handlers) {
-        
+
         if (arguments.length != 0) {
 
             SilboPS.EndPoint.call(this, handlers, 'PUBLISHER');
@@ -17,7 +17,7 @@ if (window.SilboPS === undefined) {
 
     SilboPS.PubEndPoint.prototype.publish = function publish(notification) {
 
-        if (!(notification instanceof Object)) {
+        if (notification == null || typeof notification !== 'object') {
 
             throw new TypeError('notification must be an object');
         }
@@ -25,7 +25,7 @@ if (window.SilboPS === undefined) {
 
         for (var key in notification) {
 
-            if (!(notification[key] instanceof Array)) {
+            if (!Array.isArray(notification[key])) {
                 throw new TypeError('notification must contain arrays as attribute values');
             }
         }
