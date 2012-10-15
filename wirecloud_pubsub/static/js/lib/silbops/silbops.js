@@ -111,6 +111,19 @@ if (window.SilboPS === undefined) {
 
     SilboPS.publish = function publish(endPoint, notification) {
 
+        if (SilboPS.__getInternalClass(notification) !== 'Object') {
+
+            throw new TypeError('notification must be an object');
+        }
+
+
+        for (var key in notification) {
+
+            if (!Array.isArray(notification[key])) {
+                throw new TypeError('notification must contain arrays as attribute values');
+            }
+        }
+
         var endpoint = SilboPS.connections[endPoint.endpointid];
 
         SilboPS.request('publish', {

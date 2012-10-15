@@ -16,20 +16,7 @@ if (window.SilboPS === undefined) {
     SilboPS.PubEndPoint.prototype = new SilboPS.EndPoint();
 
     SilboPS.PubEndPoint.prototype.publish = function publish(notification) {
-
-        if (notification == null || typeof notification !== 'object') {
-
-            throw new TypeError('notification must be an object');
-        }
-
-
-        for (var key in notification) {
-
-            if (!Array.isArray(notification[key])) {
-                throw new TypeError('notification must contain arrays as attribute values');
-            }
-        }
-
+		
         SilboPS.publish(this, notification);
     }
 
