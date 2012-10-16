@@ -4,66 +4,66 @@
 
     "use strict";
 
-    var register_endpoint, unload_gadget, endpointsByGadget, Manager,
+    var register_endpoint, unload_widget, endpointsByWidget, Manager,
         PubEndPoint, SubEndPoint;
 
-    endpointsByGadget = {};
+    endpointsByWidget = {};
     Manager = {};
 
-    register_endpoint = function register_endpoint(iGadgetId, endpoint) {
+    register_endpoint = function register_endpoint(iWidgetId, endpoint) {
 
-        var iGadget;
+        var iWidget;
 
         if (!(endpoint instanceof SilboPS.SubEndPoint) && !(endpoint instanceof SilboPS.PubEndPoint)) {
             throw new TypeError();
         }
 
-        iGadget = opManager.activeWorkspace.getIWidget(iGadgetId);
+        iWidget = opManager.activeWorkspace.getIWidget(iWidgetId);
 
-        if (!(iGadgetId in endpointsByGadget)) {
-            endpointsByGadget[iGadgetId] = [];
-            iGadget.addEventListener('unload', this._iwidget_unload_listener);
+        if (!(iWidgetId in endpointsByWidget)) {
+            endpointsByWidget[iWidgetId] = [];
+            iWidget.addEventListener('unload', this._iwidget_unload_listener);
         }
 
-        endpointsByGadget[iGadgetId].push(endpoint);
+        endpointsByWidget[iWidgetId].push(endpoint);
     };
 
-    unload_gadget = function unload_gadget(iGadget) {
+    unload_widget = function unload_widget(iWidget) {
         var endpoints, endpoint;
 
-        endpoints = endpointsByGadget[iGadget.getId()];
+        endpoints = endpointsByWidget[iWidget.getId()];
         for (endpoint in endpoints) {
             endpoint.close();
         }
 
-        delete endpointsByGadget[iGadget.getId()];
+        delete endpointsByWidget[iWidget.getId()];
     };
 
-    PubEndPoint = function PubEndPoint(iGadgetId) {
+    PubEndPoint = function PubEndPoint(iWidgetId) {
         var args;
 
         if (arguments.length === 0) {
             return;
         }
 
-        iGadgetId = arguments[0];
+        iWidgetId = arguments[0];
         args = Array.prototype.slice.call(arguments, 1);
         SilboPS.PubEndPoint.apply(this, args);
-        register_endpoint(iGadgetId, this);
+        register_endpoint(iWidgetId, this);
     };
     PubEndPoint.prototype = new SilboPS.PubEndPoint();
 
     SubEndPoint = function SubEndPoint() {
-        var args, iGadgetId;
+        var args, iWidgetId;
 
         if (arguments.length === 0) {
             return;
         }
 
-        iGadgetId = arguments[0];
+        iWidgetId = arguments[0];
         args = Array.prototype.slice.call(arguments, 1);
         SilboPS.SubEndPoint.apply(this, args);
-        register_endpoint(iGadgetId, this);
+        register_endpoint(iWidgetId, this);
     };
     SubEndPoint.prototype = new SilboPS.SubEndPoint();
 
