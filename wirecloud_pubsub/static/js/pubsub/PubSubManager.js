@@ -1,8 +1,16 @@
-var PubSubManager = (function(opmanager, SilboPS) {
-    var endpointsByGadget = {};
-    var Manager = {};
+/*global Wirecloud*/
 
-    var register_endpoint = function(iGadgetId, endpoint) {
+(function (opmanager, SilboPS) {
+
+    "use strict";
+
+    var register_endpoint, endpointsByGadget, Manager, PubEndPoint, SubEndPoint;
+
+    endpointsByGadget = {};
+    Manager = {};
+
+    register_endpoint = function register_endpoint(iGadgetId, endpoint) {
+
         if (!(endpoint instanceof SilboPS.SubEndPoint) && !(endpoint instanceof SilboPS.PubEndPoint)) {
             throw new TypeError();
         }
@@ -14,10 +22,10 @@ var PubSubManager = (function(opmanager, SilboPS) {
         endpointsByGadget[iGadgetId].push(endpoint);
     };
 
-    var PubEndPoint = function (iGadgetId) {
-        var args, iGadgetId;
+    PubEndPoint = function PubEndPoint(iGadgetId) {
+        var args;
 
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return;
         }
 
@@ -28,10 +36,10 @@ var PubSubManager = (function(opmanager, SilboPS) {
     };
     PubEndPoint.prototype = new SilboPS.PubEndPoint();
 
-    var SubEndPoint = function () {
+    SubEndPoint = function SubEndPoint() {
         var args, iGadgetId;
 
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return;
         }
 
@@ -68,7 +76,8 @@ var PubSubManager = (function(opmanager, SilboPS) {
     */
     SilboPS.Stream.brokerUri = Wirecloud.URLs.DEFAULT_SILBOPS_BROKER;
 
-    return Manager;
+    window.PubSubManager = Manager;
+
 })(OpManagerFactory.getInstance(), SilboPS);
 
-delete SilboPS;
+delete window.SilboPS;
