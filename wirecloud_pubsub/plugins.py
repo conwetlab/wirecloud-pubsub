@@ -1,3 +1,5 @@
+from django.conf import settings
+
 from wirecloud.plugins import WirecloudPlugin
 import wirecloud_pubsub
 
@@ -19,6 +21,11 @@ class PubSubPlugin(WirecloudPlugin):
             'js/lib/silbops/eventsource.js',
             'js/lib/silbops/filter.js',
             'js/pubsub/PubSubManager.js',
+        )
+
+    def get_ajax_endpoints(self, view):
+        return (
+            {'id': 'DEFAULT_SILBOPS_BROKER', 'url': settings.DEFAULT_SILBOPS_BROKER},
         )
 
     def get_widget_api_extensions(self, view):

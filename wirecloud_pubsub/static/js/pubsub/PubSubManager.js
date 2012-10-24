@@ -1,44 +1,69 @@
-var PubSubManager = (function(opmanager, SilboPS) {
-    var endpointsByGadget = {};
-    var Manager = {};
+/*global opManager, Wirecloud*/
 
-    var register_endpoint = function(iGadgetId, endpoint) {
+(function (opmanager, SilboPS) {
+
+    "use strict";
+
+    var register_endpoint, unload_widget, endpointsByWidget, Manager,
+        PubEndPoint, SubEndPoint;
+
+    endpointsByWidget = {};
+    Manager = {};
+
+    register_endpoint = function register_endpoint(iWidgetId, endpoint) {
+
+        var iWidget;
+
         if (!(endpoint instanceof SilboPS.SubEndPoint) && !(endpoint instanceof SilboPS.PubEndPoint)) {
             throw new TypeError();
         }
 
-        if (!(iGadgetId in endpointsByGadget)) {
-            endpointsByGadget[iGadgetId] = [];
+        iWidget = opManager.activeWorkspace.getIWidget(iWidgetId);
+
+        if (!(iWidgetId in endpointsByWidget)) {
+            endpointsByWidget[iWidgetId] = [];
+            iWidget.addEventListener('unload', this._iwidget_unload_listener);
         }
 
-        endpointsByGadget[iGadgetId].push(endpoint);
+        endpointsByWidget[iWidgetId].push(endpoint);
     };
 
-    var PubEndPoint = function (iGadgetId) {
-        var args, iGadgetId;
+    unload_widget = function unload_widget(iWidget) {
+        var endpoints, endpoint;
 
-        if (arguments.length == 0) {
+        endpoints = endpointsByWidget[iWidget.getId()];
+        for (endpoint in endpoints) {
+            endpoint.close();
+        }
+
+        delete endpointsByWidget[iWidget.getId()];
+    };
+
+    PubEndPoint = function PubEndPoint(iWidgetId) {
+        var args;
+
+        if (arguments.length === 0) {
             return;
         }
 
-        iGadgetId = arguments[0];
+        iWidgetId = arguments[0];
         args = Array.prototype.slice.call(arguments, 1);
         SilboPS.PubEndPoint.apply(this, args);
-        register_endpoint(iGadgetId, this);
+        register_endpoint(iWidgetId, this);
     };
     PubEndPoint.prototype = new SilboPS.PubEndPoint();
 
-    var SubEndPoint = function () {
-        var args, iGadgetId;
+    SubEndPoint = function SubEndPoint() {
+        var args, iWidgetId;
 
-        if (arguments.length == 0) {
+        if (arguments.length === 0) {
             return;
         }
 
-        iGadgetId = arguments[0];
+        iWidgetId = arguments[0];
         args = Array.prototype.slice.call(arguments, 1);
         SilboPS.SubEndPoint.apply(this, args);
-        register_endpoint(iGadgetId, this);
+        register_endpoint(iWidgetId, this);
     };
     SubEndPoint.prototype = new SilboPS.SubEndPoint();
 
@@ -54,20 +79,10 @@ var PubSubManager = (function(opmanager, SilboPS) {
         value: SilboPS.Filter
     });
 
-    /*
-    var unload_gadget = function(gadget) {
-        var endpoints = endpointsByGadget[gadget];
-        for (endpoint in endpoints) {
-            endpoint.close();
-        }
+    SilboPS.Stream.brokerUri = Wirecloud.URLs.DEFAULT_SILBOPS_BROKER;
 
-        delete endpointsByGadget[gadget];
-    };
+    window.PubSubManager = Manager;
 
-    opmanager.listen('igadget_unload', unload_gadget);
-    */
-
-    return Manager;
 })(OpManagerFactory.getInstance(), SilboPS);
 
-delete SilboPS;
+delete window.SilboPS;

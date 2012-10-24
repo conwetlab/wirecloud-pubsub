@@ -6,12 +6,12 @@ EzWebAPI.SilboPS = (function () {;
 
 
     PubEndPoint = function () {
-        PubSubManager.PubEndPoint.apply(this, [EzWebAPI.getId()].concat(arguments));
+        PubSubManager.PubEndPoint.apply(this, [EzWebAPI.getId()].concat(Array.prototype.slice.call(arguments)));
     };
     PubEndPoint.prototype = new PubSubManager.PubEndPoint();
 
     SubEndPoint = function () {
-        PubSubManager.SubEndPoint.apply(this, [EzWebAPI.getId()].concat(arguments));
+        PubSubManager.SubEndPoint.apply(this, [EzWebAPI.getId()].concat(Array.prototype.slice.call(arguments)));
     };
     SubEndPoint.prototype = new PubSubManager.SubEndPoint();
 
