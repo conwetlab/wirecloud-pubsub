@@ -50,8 +50,11 @@ EzWebAPI.SilboPS only exports PubEndPoint, SubEndPoint and Filter classes. Full
 documentation of SilboPS is available at
 https://svn.forge.morfeo-project.org/4caast/trunk/WP6/pubsub/README.md.
 
-Example
-------
+Examples
+--------
+
+Publishing
+..........
 
 ::
 
@@ -66,7 +69,7 @@ Example
         setInterval(publish, 2000);
     }
 
-    endpoint = EzWebAPI.SilboPS.PubEndPoint({
+    endpoint = new EzWebAPI.SilboPS.PubEndPoint({
         onopen: function(endpoint) {
             alert('Endpoint ready');
             start_publishing();
@@ -74,4 +77,29 @@ Example
         onclose: function(endpoint) {
             alert('Endpoint closed');
         }
-    })
+    });
+
+
+Subscription
+............
+
+::
+    var endpoint, filter;
+
+    filter = new EzWebAPI.SilboPS.Filter();
+    filter.constrain('fqn').startsWith('es.upm.fi.')
+            .constrain('eventType').eq('monitoring');
+
+    endpoint = new EzWebAPI.SilboPS.SubEndPoint({
+        onopen: function (endpoint) {
+            endpoint.subscribe(filter);
+            alert('Endpoint ready');
+        },
+        onclose: function (endpoint) {
+            alert('Endpoint closed');
+        },
+        onnotify: function (endpoint, data) {
+            var notification = data.notification;
+            alert(notification.fqn);
+        }
+    });
