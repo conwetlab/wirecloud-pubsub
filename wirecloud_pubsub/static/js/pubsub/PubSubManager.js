@@ -18,22 +18,21 @@
             throw new TypeError();
         }
 
-        iWidget = opManager.activeWorkspace.getIWidget(iWidgetId);
-
         if (!(iWidgetId in endpointsByWidget)) {
+            iWidget = opManager.activeWorkspace.getIWidget(iWidgetId);
             endpointsByWidget[iWidgetId] = [];
-            iWidget.addEventListener('unload', this._iwidget_unload_listener);
+            iWidget.addEventListener('unload', unload_widget);
         }
 
         endpointsByWidget[iWidgetId].push(endpoint);
     };
 
     unload_widget = function unload_widget(iWidget) {
-        var endpoints, endpoint;
+        var i, endpoints;
 
         endpoints = endpointsByWidget[iWidget.getId()];
-        for (endpoint in endpoints) {
-            endpoint.close();
+        for (i = 0; i < endpoints.length; i += 1) {
+            endpoints[i].close();
         }
 
         delete endpointsByWidget[iWidget.getId()];
