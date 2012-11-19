@@ -1,17 +1,21 @@
-EzWebAPI.SilboPS = (function () {;
+/*global MashupPlatform*/
+
+MashupPlatform.SilboPS = (function () {
+
+    "use strict";
 
     var API = {},
-        PubSubManager = this.window.parent.PubSubManager,
+        PubSubManager = window.parent.PubSubManager,
         PubEndPoint, SubEndPoint;
 
 
     PubEndPoint = function () {
-        PubSubManager.PubEndPoint.apply(this, [EzWebAPI.getId()].concat(Array.prototype.slice.call(arguments)));
+        PubSubManager.PubEndPoint.apply(this, ['ioperator', MashupPlatform.operator.id].concat(Array.prototype.slice.call(arguments)));
     };
     PubEndPoint.prototype = new PubSubManager.PubEndPoint();
 
     SubEndPoint = function () {
-        PubSubManager.SubEndPoint.apply(this, [EzWebAPI.getId()].concat(Array.prototype.slice.call(arguments)));
+        PubSubManager.SubEndPoint.apply(this, ['ioperator', MashupPlatform.operator.id].concat(Array.prototype.slice.call(arguments)));
     };
     SubEndPoint.prototype = new PubSubManager.SubEndPoint();
 
@@ -32,4 +36,4 @@ EzWebAPI.SilboPS = (function () {;
 
     return API;
 })();
-Object.defineProperty(EzWebAPI, 'SilboPS', {value: EzWebAPI.SilboPS});
+Object.defineProperty(MashupPlatform, 'SilboPS', {value: MashupPlatform.SilboPS});

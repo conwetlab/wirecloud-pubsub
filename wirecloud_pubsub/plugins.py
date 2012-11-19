@@ -30,5 +30,10 @@ class PubSubPlugin(WirecloudPlugin):
 
     def get_widget_api_extensions(self, view):
         return (
-            'js/WirecloudAPI/PubSub.js',
+            'js/WirecloudAPI/PubSub/Widget.js',
+        )
+
+    def get_operator_api_extensions(self, view):
+        return (
+            'js/WirecloudAPI/PubSub/Operator.js',
         )
