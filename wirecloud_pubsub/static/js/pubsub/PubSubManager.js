@@ -50,7 +50,7 @@
         if (!(iOperatorId in endpointsByOperator)) {
             iOperator = opManager.activeWorkspace.wiring.ioperators[iOperatorId];
             endpointsByOperator[iOperatorId] = [];
-            iOperator.addEventListener('unload', unload_widget);
+            iOperator.addEventListener('unload', unload_operator);
         }
 
         endpointsByOperator[iOperatorId].push(endpoint);
@@ -59,12 +59,12 @@
     unload_operator = function unload_operator(iOperator) {
         var i, endpoints;
 
-        endpoints = endpointsByIOperator[iOperator.getId()];
+        endpoints = endpointsByOperator[iOperator.id];
         for (i = 0; i < endpoints.length; i += 1) {
             endpoints[i].close();
         }
 
-        delete endpointsByIOperator[iOperator.getId()];
+        delete endpointsByOperator[iOperator.id];
     };
 
     PubEndPoint = function PubEndPoint(type, id) {
