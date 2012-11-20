@@ -25,7 +25,7 @@ You also have to add it to your ``WIRECLOUD_PLUGINS``: ::
 
     WIRECLOUD_PLUGINS = (
         ...
-        'wirecloud_pubsub.wirecloud.PubSubPlugin',
+        'wirecloud_pubsub.plugins.PubSubPlugin',
         ...
     )
 
