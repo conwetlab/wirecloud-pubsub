@@ -24,7 +24,7 @@ data_files.append(('wirecloud_pubsub', ('README.rst',)))
 
 setup(
     name='wirecloud-pubsub',
-    version=wirecloud_pubsub.__version__,
+    version=__import__('wirecloud_pubsub').__version__,
     description='Wirecloud plugin providing PubSub support.',
     long_description=open(os.path.join(ROOT, 'README.rst')).read(),
     author='CoNWeT Lab',
