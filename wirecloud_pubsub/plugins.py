@@ -1,6 +1,6 @@
 from django.conf import settings
 
-from wirecloud.plugins import WirecloudPlugin
+from wirecloud.platform.plugins import WirecloudPlugin
 import wirecloud_pubsub
 
 
