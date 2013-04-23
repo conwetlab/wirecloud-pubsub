@@ -44,10 +44,12 @@ installation: ::
 Usage
 -----
 
-Once wirecloud-pubsub is installed and activated, gadgets can take advantage of
-the PubSub functionallities through MashupApplication.SilboPS. Currently,
-MashupApplication.SilboPS only exports PubEndPoint, SubEndPoint and Filter
-classes. Full documentation of SilboPS is available at
+Once wirecloud-pubsub is installed and activated, widgets and operators can
+take advantage the PubSub functionallities through the
+MashupApplication.SilboPS object. Currently, the MashupApplication.SilboPS
+object only exports the PubEndPoint, SubEndPoint and Filter classes defined by
+the original javascript bindings provided by SilboPS. Full documentation of
+SilboPS is available at
 https://svn.forge.morfeo-project.org/4caast/trunk/WP6/pubsub/README.md.
 
 Examples
