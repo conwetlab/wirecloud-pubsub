@@ -2,7 +2,7 @@
 Requirements
 ============
 
-* Wirecloud 0.3.0
+* Wirecloud 0.4.0
 * A PubSub server (https://svn.forge.morfeo-project.org/4caast/trunk/WP6/pubsub)
 
 Installation
@@ -45,9 +45,9 @@ Usage
 -----
 
 Once wirecloud-pubsub is installed and activated, gadgets can take advantage of
-the PubSub functionallities through EzWebAPI.SilboPS. Currently,
-EzWebAPI.SilboPS only exports PubEndPoint, SubEndPoint and Filter classes. Full
-documentation of SilboPS is available at
+the PubSub functionallities through MashupApplication.SilboPS. Currently,
+MashupApplication.SilboPS only exports PubEndPoint, SubEndPoint and Filter
+classes. Full documentation of SilboPS is available at
 https://svn.forge.morfeo-project.org/4caast/trunk/WP6/pubsub/README.md.
 
 Examples
@@ -69,7 +69,7 @@ Publishing
         setInterval(publish, 2000);
     }
 
-    endpoint = new EzWebAPI.SilboPS.PubEndPoint({
+    endpoint = new MashupApplication.SilboPS.PubEndPoint({
         onopen: function(endpoint) {
             alert('Endpoint ready');
             start_publishing();
@@ -80,17 +80,18 @@ Publishing
     });
 
 
-Subscription
-............
+Subscribing
+...........
 
 ::
+
     var endpoint, filter;
 
-    filter = new EzWebAPI.SilboPS.Filter();
+    filter = new MashupApplication.SilboPS.Filter();
     filter.constrain('fqn').startsWith('es.upm.fi.')
             .constrain('eventType').eq('monitoring');
 
-    endpoint = new EzWebAPI.SilboPS.SubEndPoint({
+    endpoint = new MashupApplication.SilboPS.SubEndPoint({
         onopen: function (endpoint) {
             endpoint.subscribe(filter);
             alert('Endpoint ready');
