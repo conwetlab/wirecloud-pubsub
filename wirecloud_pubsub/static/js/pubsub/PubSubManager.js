@@ -31,12 +31,12 @@
     unload_widget = function unload_widget(iWidget) {
         var i, endpoints;
 
-        endpoints = endpointsByWidget[iWidget.getId()];
+        endpoints = endpointsByWidget[iWidget.id];
         for (i = 0; i < endpoints.length; i += 1) {
             endpoints[i].close();
         }
 
-        delete endpointsByWidget[iWidget.getId()];
+        delete endpointsByWidget[iWidget.id];
     };
 
     register_operator_endpoint = function register_operator_endpoint(iOperatorId, endpoint) {
