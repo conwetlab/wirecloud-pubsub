@@ -9,7 +9,11 @@
 	
 	SilboPS.Events = function Events(eventList) {
 		
-		SilboPS.Utils.requireInstanceOf(eventList, Array, "eventList");
+		if (!Array.isArray(eventList)) {
+			
+			throw new TypeError("eventList isn't an instance of Array");
+		}
+		
 		var _handlers = {};
 		
 		/**
@@ -21,7 +25,11 @@
 		this.on = function on(eventName, handler) {
 			
 			SilboPS.Utils.requireString(eventName, "eventName");
-			SilboPS.Utils.requireInstanceOf(handler, Function, "handler");
+			
+			if (typeof handler !== "function") {
+				
+				throw new TypeError("handler isn't an instance of Function");
+			}
 			
 			if (eventList.length > 0 && eventList.indexOf(eventName) < 0) {
 				

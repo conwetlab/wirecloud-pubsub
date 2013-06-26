@@ -25,7 +25,7 @@
 					// when not required
 		}
 		
-		SilboPS.Utils.requireInstanceOf(handlers, Object, "handlers");
+		SilboPS.Utils.requireNotNull(handlers, "handlers must not be null");
 		
 		var that = this;
 		var _streamid = null;
