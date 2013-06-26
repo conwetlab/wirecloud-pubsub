@@ -28,6 +28,7 @@ class PubSubPlugin(WirecloudPlugin):
             "js/lib/silbops/stream.js",
             "js/lib/silbops/silbops.js",
             "js/lib/silbops/endpoint.js",
+            "js/pubsub/PubSubManager.js",
         )
 
     def get_ajax_endpoints(self, view):
