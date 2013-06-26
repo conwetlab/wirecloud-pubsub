@@ -74,6 +74,9 @@
             return;
         }
 
+        // TODO add multi broker support
+        SilboPS.Net.setBrokerUri(Wirecloud.URLs.DEFAULT_SILBOPS_BROKER);
+
         args = Array.prototype.slice.call(arguments, 2);
         SilboPS.PubEndPoint.apply(this, args);
         switch (type) {
@@ -93,6 +96,9 @@
         if (arguments.length === 0) {
             return;
         }
+
+        // TODO add multi broker support
+        SilboPS.Net.setBrokerUri(Wirecloud.URLs.DEFAULT_SILBOPS_BROKER);
 
         args = Array.prototype.slice.call(arguments, 2);
         SilboPS.SubEndPoint.apply(this, args);
@@ -122,8 +128,6 @@
         "Filter": {value: SilboPS.Filter},
         "Net": {value: SilboPS.Net}
     });
-
-    SilboPS.Net.setBrokerUri(Wirecloud.URLs.DEFAULT_SILBOPS_BROKER);
 
     window.PubSubManager = Manager;
 
