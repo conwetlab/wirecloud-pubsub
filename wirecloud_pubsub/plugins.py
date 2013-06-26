@@ -12,15 +12,23 @@ class PubSubPlugin(WirecloudPlugin):
 
     def get_scripts(self, view):
         return (
-            'js/lib/silbops/events.js',
-            'js/lib/silbops/endpoint.js',
-            'js/lib/silbops/pubendpoint.js',
-            'js/lib/silbops/subendpoint.js',
-            'js/lib/silbops/stream.js',
-            'js/lib/silbops/silbops.js',
-            'js/lib/silbops/eventsource.js',
-            'js/lib/silbops/filter.js',
-            'js/pubsub/PubSubManager.js',
+            "js/lib/prototype.js",
+            "js/lib/eventsource.js",
+            "js/utils.js",
+            "js/events.js",
+            "js/model/basic/type.js",
+            "js/model/basic/value.js",
+            "js/model/basic/operator.js",
+            "js/model/basic/attribute.js",
+            "js/model/advertise.js",
+            "js/model/constraint.js",
+            "js/model/contextfunction.js",
+            "js/model/notification.js",
+            "js/model/filter.js",
+            "js/json-value.js",
+            "js/stream.js",
+            "js/silbops.js",
+            "js/endpoint.js",
         )
 
     def get_ajax_endpoints(self, view):

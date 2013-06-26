@@ -19,19 +19,20 @@ EzWebAPI.SilboPS = (function () {
     };
     SubEndPoint.prototype = new PubSubManager.SubEndPoint();
 
-    Object.defineProperty(API, 'PubEndPoint', {
-        value: PubEndPoint,
-        enumerable: true
-    });
-
-    Object.defineProperty(API, 'SubEndPoint', {
-        value: SubEndPoint,
-        enumerable: true
-    });
-
-    Object.defineProperty(API, 'Filter', {
-        value: PubSubManager.Filter,
-        enumerable: true
+    Object.defineProperties(API, {
+	"PubEndPoint": {value: PubEndPoint},
+        "SubEndPoint": {value: SubEndPoint},
+        "Type": {value: PubSubManager.Type},
+        "Value": {value: PubSubManager.Value},
+        "Operator": {value: PubSubManager.Operator},
+        "Attribute": {value: PubSubManager.Attribute},
+        "Advertise": {value: PubSubManager.Advertise},
+        "Constraint": {value: PubSubManager.Constraint},
+        "ContextFunction": {value: PubSubManager.ContextFunction},
+        "Notification": {value: PubSubManager.Notification},
+        "Context": {value: PubSubManager.Context},
+        "Filter": {value: PubSubManager.Filter},
+        "Net": {value: PubSubManager.Net}
     });
 
     return API;

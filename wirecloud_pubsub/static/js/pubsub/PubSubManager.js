@@ -107,19 +107,23 @@
     };
     SubEndPoint.prototype = new SilboPS.SubEndPoint();
 
-    Object.defineProperty(Manager, 'PubEndPoint', {
-        value: PubEndPoint
+    Object.defineProperties(Manager, {
+	'PubEndPoint': {value: PubEndPoint},
+        'SubEndPoint': {value: SubEndPoint},
+        "Type": {value: SilboPS.Type},
+        "Value": {value: SilboPS.Value},
+        "Operator": {value: SilboPS.Operator},
+        "Attribute": {value: SilboPS.Attribute},
+        "Advertise": {value: SilboPS.Advertise},
+        "Constraint": {value: SilboPS.Constraint},
+        "ContextFunction": {value: SilboPS.ContextFunction},
+        "Notification": {value: SilboPS.Notification},
+        "Context": {value: SilboPS.Context},
+        "Filter": {value: SilboPS.Filter},
+        "Net": {value: SilboPS.Net}
     });
 
-    Object.defineProperty(Manager, 'SubEndPoint', {
-        value: SubEndPoint
-    });
-
-    Object.defineProperty(Manager, 'Filter', {
-        value: SilboPS.Filter
-    });
-
-    SilboPS.Stream.brokerUri = Wirecloud.URLs.DEFAULT_SILBOPS_BROKER;
+    SilboPS.Net.setBrokerUri(Wirecloud.URLs.DEFAULT_SILBOPS_BROKER);
 
     window.PubSubManager = Manager;
 

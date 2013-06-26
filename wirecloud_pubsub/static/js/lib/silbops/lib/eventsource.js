@@ -42,7 +42,7 @@
         that.readyState = CONNECTING;
 
         that.toString   = function () {
-            return '[object EventSource]'
+            return '[object EventSource]';
         };
 
         // EventSource listener
@@ -70,12 +70,12 @@
 
                 xhr.abort();
             }
-        }
+        };
 
         resourceLocation  = parseUri(resource);
         that.URL  = resourceLocation.source;
 
-        var openConnectionXHR = function() {
+        that.openConnectionXHR = function openConnectionXHR() {
 
             xhr = new XMLHttpRequest();
             xhr.open('GET', that.URL, true);
@@ -103,7 +103,7 @@
                         processMessageFromXHR();
                         break;
                 }
-            }
+            };
 
             xhr.send(null);
         };
@@ -113,7 +113,7 @@
             offset    = 0;
             data = '';
             name = 'message';
-            reconnectTimeout = setTimeout(openConnectionXHR, retry);
+            reconnectTimeout = setTimeout(that.openConnectionXHR, retry);
         };
 
         var processMessageFromXHR = function() {
@@ -182,8 +182,5 @@
                 }
             }
         };
-
-        //  INIT EVENT SOURCE CONNECTION
-        openConnectionXHR();
     };
 })();
