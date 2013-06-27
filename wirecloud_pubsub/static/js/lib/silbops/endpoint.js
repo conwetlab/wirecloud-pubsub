@@ -81,12 +81,7 @@
 	 * @param handlers the handlers to use
 	 */
 	SilboPS.PubEndPoint = function PubEndPoint(handlers) {
-
-		if (arguments.length !== 1) {
-			return; // to have inheritance but to avoid creating functions
-					// when not required
-		}
-
+		
 		EndPoint.call(this, events, handlers, SilboPS.EndPoint.PUBLISHER);
 		
 		var that = this;
@@ -126,11 +121,6 @@
 	 * @param handlers the handlers to use
 	 */
 	SilboPS.SubEndPoint = function SubEndPoint(handlers) {
-		
-		if (arguments.length !== 1) {
-			return; // to have inheritance but to avoid creating functions
-					// when not required
-		}
 		
 		EndPoint.call(this, allEvents, handlers, SilboPS.EndPoint.SUBSCRIBER);
 		

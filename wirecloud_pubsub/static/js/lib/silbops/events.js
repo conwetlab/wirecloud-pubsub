@@ -9,11 +9,7 @@
 	
 	SilboPS.Events = function Events(eventList) {
 		
-		if (!Array.isArray(eventList)) {
-			
-			throw new TypeError("eventList isn't an instance of Array");
-		}
-		
+		SilboPS.Utils.requireInstanceOf(eventList, Array, "eventList");
 		var _handlers = {};
 		
 		/**
