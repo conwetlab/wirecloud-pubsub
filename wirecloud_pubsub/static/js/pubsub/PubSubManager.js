@@ -67,8 +67,7 @@
         delete endpointsByOperator[iOperator.id];
     };
 
-    PubEndPoint = function PubEndPoint(type, id) {
-        var args;
+    PubEndPoint = function PubEndPoint(type, id, options) {
 
         if (arguments.length === 0) {
             return;
@@ -77,21 +76,21 @@
         // TODO add multi broker support
         SilboPS.Net.setBrokerUri(Wirecloud.URLs.DEFAULT_SILBOPS_BROKER);
 
-        args = Array.prototype.slice.call(arguments, 2);
-        SilboPS.PubEndPoint.apply(this, args);
+        var silbops_endpoint = new SilboPS.PubEndPoint(options);
+
         switch (type) {
         case "iwidget":
-            register_widget_endpoint(id, this);
+            register_widget_endpoint(id, silbops_endpoint);
             break;
         case "ioperator":
-            register_operator_endpoint(id, this);
+            register_operator_endpoint(id, silbops_endpoint);
             break;
         }
-    };
-    PubEndPoint.prototype = new SilboPS.PubEndPoint();
 
-    SubEndPoint = function SubEndPoint(type, id) {
-        var args;
+        return silbops_endpoint;
+    };
+
+    SubEndPoint = function SubEndPoint(type, id, options) {
 
         if (arguments.length === 0) {
             return;
@@ -100,18 +99,19 @@
         // TODO add multi broker support
         SilboPS.Net.setBrokerUri(Wirecloud.URLs.DEFAULT_SILBOPS_BROKER);
 
-        args = Array.prototype.slice.call(arguments, 2);
-        SilboPS.SubEndPoint.apply(this, args);
+        var silbops_endpoint = new SilboPS.SubEndPoint(options);
+
         switch (type) {
         case "iwidget":
-            register_widget_endpoint(id, this);
+            register_widget_endpoint(id, silbops_endpoint);
             break;
         case "ioperator":
-            register_operator_endpoint(id, this);
+            register_operator_endpoint(id, silbops_endpoint);
             break;
         }
+        
+        return silbops_endpoint;
     };
-    SubEndPoint.prototype = new SilboPS.SubEndPoint();
 
     Object.defineProperties(Manager, {
 	'PubEndPoint': {value: PubEndPoint},
