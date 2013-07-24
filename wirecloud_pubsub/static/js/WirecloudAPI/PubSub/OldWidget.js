@@ -9,15 +9,13 @@ EzWebAPI.SilboPS = (function () {
         PubEndPoint, SubEndPoint;
 
 
-    PubEndPoint = function () {
-        PubSubManager.PubEndPoint.apply(this, ['iwidget', EzWebAPI.getId()].concat(Array.prototype.slice.call(arguments)));
+    PubEndPoint = function (options) {
+        return PubSubManager.PubEndPoint('iwidget', EzWebAPI.getId(), options);
     };
-    PubEndPoint.prototype = new PubSubManager.PubEndPoint();
 
-    SubEndPoint = function () {
-        PubSubManager.SubEndPoint.apply(this, ['iwidget', EzWebAPI.getId()].concat(Array.prototype.slice.call(arguments)));
+    SubEndPoint = function (options) {
+        return PubSubManager.SubEndPoint('iwidget', EzWebAPI.getId(), options);
     };
-    SubEndPoint.prototype = new PubSubManager.SubEndPoint();
 
     Object.defineProperties(API, {
 	"PubEndPoint": {value: PubEndPoint},

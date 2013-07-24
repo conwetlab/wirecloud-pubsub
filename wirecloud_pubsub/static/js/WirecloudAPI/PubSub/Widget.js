@@ -9,15 +9,13 @@ MashupPlatform.SilboPS = (function () {
         PubEndPoint, SubEndPoint;
 
 
-    PubEndPoint = function () {
-        PubSubManager.PubEndPoint.apply(this, ['iwidget', MashupPlatform.widget.id].concat(Array.prototype.slice.call(arguments)));
+    PubEndPoint = function (options) {
+        return PubSubManager.PubEndPoint('iwidget', MashupPlatform.widget.id, options);
     };
-    PubEndPoint.prototype = new PubSubManager.PubEndPoint();
 
-    SubEndPoint = function () {
-        PubSubManager.SubEndPoint.apply(this, ['iwidget', MashupPlatform.widget.id].concat(Array.prototype.slice.call(arguments)));
+    SubEndPoint = function (options) {
+        return PubSubManager.SubEndPoint('iwidget', MashupPlatform.widget.id, options);
     };
-    SubEndPoint.prototype = new PubSubManager.SubEndPoint();
 
     Object.defineProperties(API, {
 	"PubEndPoint": {value: PubEndPoint},
