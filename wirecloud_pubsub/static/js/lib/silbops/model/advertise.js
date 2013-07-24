@@ -106,11 +106,10 @@
 			SilboPS.Utils.requireInstanceOf(advertise, SilboPS.Advertise);
 			
 			var attrArr = advertise.getAttributes();
-			var localAttrArray = that.getAttributes();
 			
 			for (var i = 0; i < attrArr.length; i++) {
 				
-				if (localAttrArray.indexOf(attrArr[i]) < 0) {
+				if (!_attributes[attrArr[i].toJSON()]) {
 					
 					return false;
 				}
