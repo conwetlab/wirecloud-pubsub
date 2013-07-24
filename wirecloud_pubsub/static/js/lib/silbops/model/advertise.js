@@ -96,6 +96,29 @@
 			return attrs;
 		};
 		
+		/** 
+		 * @param advertise {SilboPS.Advertise} the whose presence is to be tested
+		 * @returns true if this contains all attributes of the given advertise,
+		 *          false otherwise.
+		 */
+		this.contains = function contains(advertise) {
+			
+			SilboPS.Utils.requireInstanceOf(advertise, SilboPS.Advertise);
+			
+			var attrArr = advertise.getAttributes();
+			var localAttrArray = that.getAttributes();
+			
+			for (var i = 0; i < attrArr.length; i++) {
+				
+				if (localAttrArray.indexOf(attrArr[i]) < 0) {
+					
+					return false;
+				}
+			}
+			
+			return true;
+		};
+		
 		/**
 		 * Converts the internal representation into a JSON object, namely
 		 * an {Array} of strings.
