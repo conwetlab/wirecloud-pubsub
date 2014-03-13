@@ -22,7 +22,7 @@
         if (!(iWidgetId in endpointsByWidget)) {
             iWidget = Wirecloud.activeWorkspace.getIWidget(iWidgetId);
             endpointsByWidget[iWidgetId] = [];
-            iWidget.addEventListener('unload', unload_widget);
+            iWidget.internal_iwidget.addEventListener('unload', unload_widget);
         }
 
         endpointsByWidget[iWidgetId].push(endpoint);
