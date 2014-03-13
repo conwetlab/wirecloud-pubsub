@@ -185,7 +185,7 @@
 				messageHandler(stream, { "data" : response.responseText });
 			};
 			
-			new Ajax.Request(brokerUri, options);
+			Wirecloud.io.makeRequest(brokerUri, options);
 		}
 				
 		// handles dispatching and unwrapping for client's messages:
