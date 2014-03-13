@@ -125,7 +125,7 @@
         "ContextFunction": {value: SilboPS.ContextFunction},
         "Notification": {value: SilboPS.Notification},
         "Context": {value: SilboPS.Context},
-        "Filter": {value: SilboPS.Filter},
+        "Subscription": {value: SilboPS.Subscription},
         "Net": {value: SilboPS.Net}
     });
 
