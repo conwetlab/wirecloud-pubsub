@@ -21,14 +21,6 @@ add it to your ``INSTALLED_APPS`` in ``settings.py``: ::
         ...
     )
 
-You also have to add it to your ``WIRECLOUD_PLUGINS``: ::
-
-    WIRECLOUD_PLUGINS = (
-        ...
-        'wirecloud_pubsub.plugins.PubSubPlugin',
-        ...
-    )
-
 As last step, add a ``DEFAULT_SILBOPS_BROKER`` setting with the URL of the
 broker to use: ::
 
