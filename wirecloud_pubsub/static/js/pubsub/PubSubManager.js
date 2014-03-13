@@ -1,6 +1,6 @@
-/*global opManager, Wirecloud*/
+/*global Wirecloud*/
 
-(function (opmanager, SilboPS) {
+(function (SilboPS) {
 
     "use strict";
 
@@ -20,7 +20,7 @@
         }
 
         if (!(iWidgetId in endpointsByWidget)) {
-            iWidget = opManager.activeWorkspace.getIWidget(iWidgetId);
+            iWidget = Wirecloud.activeWorkspace.getIWidget(iWidgetId);
             endpointsByWidget[iWidgetId] = [];
             iWidget.addEventListener('unload', unload_widget);
         }
@@ -48,7 +48,7 @@
         }
 
         if (!(iOperatorId in endpointsByOperator)) {
-            iOperator = opManager.activeWorkspace.wiring.ioperators[iOperatorId];
+            iOperator = Wirecloud.activeWorkspace.wiring.ioperators[iOperatorId];
             endpointsByOperator[iOperatorId] = [];
             iOperator.addEventListener('unload', unload_operator);
         }
@@ -131,6 +131,6 @@
 
     window.PubSubManager = Manager;
 
-})(OpManagerFactory.getInstance(), SilboPS);
+})(SilboPS);
 
 delete window.SilboPS;
