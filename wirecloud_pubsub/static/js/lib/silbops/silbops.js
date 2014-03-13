@@ -342,14 +342,14 @@
 			request(action, param);
 		};
 		
-		this.sendSubscribe = function sendSubscribe(endpoint, filter, toSubscribe) {
+		this.sendSubscribe = function sendSubscribe(endpoint, subscription, toSubscribe) {
 			
 			checkEndpointType(endpoint, SilboPS.EndPoint.SUBSCRIBER);
-			SilboPS.Utils.requireInstanceOf(filter, SilboPS.Filter);
+			SilboPS.Utils.requireInstanceOf(subscription, SilboPS.Subscription);
 			
 			var action = toSubscribe ? "subscribe" : "unsubscribe";
 			var param = createEndpointObj(endpoint);
-			param["filter"] = SilboPS.fixJSONdouble(JSON.stringify(filter.toJSON()));
+			param["subscription"] = SilboPS.fixJSONdouble(JSON.stringify(subscription.toJSON()));
 			request(action, param);
 		};
 		

@@ -154,7 +154,7 @@
 	 * attrIter must support "getAttributes()" method
 	 * 
 	 * @param attrIter the object with attribute-key to convert
-	 * (e.g. Filter, Notification...)
+	 * (e.g. Subscription, Notification...)
 	 * @returns {SilboPS.Advertise}
 	 */
 	SilboPS.Advertise.asAdvertise = function asAdvertise(attrIter) {

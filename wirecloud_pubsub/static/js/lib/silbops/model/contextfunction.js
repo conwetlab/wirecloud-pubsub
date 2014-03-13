@@ -50,13 +50,13 @@
 		/**
 		 * Adds the given constraint to the context function
 		 * @param notifAttr {SilboPS.Attribute} the notification attribute
-		 * @param filterAttr {SilboPS.Attribute} the filter attribute
+		 * @param subscriptionAttr {SilboPS.Attribute} the subscription attribute
 		 * @param range {number} the maximum distance accepted between the two values
 		 * @returns {this} to enable chaining
 		 */
-		this.addConstraint = function addConstraint(notifAttr, filterAttr, range) {
+		this.addConstraint = function addConstraint(notifAttr, subscriptionAttr, range) {
 			
-			_constraintMap[toStringKey(notifAttr, filterAttr)] = new SilboPS.Value(SilboPS.Type.DOUBLE, range);
+			_constraintMap[toStringKey(notifAttr, subscriptionAttr)] = new SilboPS.Value(SilboPS.Type.DOUBLE, range);
 			return that;
 		};
 		
@@ -92,28 +92,28 @@
 			
 			var attributes = JSON.parse(key);
 			var notifAttr = SilboPS.Attribute.fromJSON(attributes["notAttr"]);
-			var filterAttr = SilboPS.Attribute.fromJSON(attributes["filterAttr"]);
+			var subscriptionAttr = SilboPS.Attribute.fromJSON(attributes["subscriptionAttr"]);
 			var value = SilboPS.Value.fromJSON(SilboPS.Type.DOUBLE, json[key]);
 			
-			contextFunc.addConstraint(notifAttr, filterAttr, value.getValue());
+			contextFunc.addConstraint(notifAttr, subscriptionAttr, value.getValue());
 		}
 		
 		return contextFunc;
 	};
 		
-	function toStringKey(notifAttr, filterAttr) {
+	function toStringKey(notifAttr, subscriptionAttr) {
 		
 		SilboPS.Utils.requireInstanceOf(notifAttr, SilboPS.Attribute, "notifAttr");
-		SilboPS.Utils.requireInstanceOf(filterAttr, SilboPS.Attribute, "filterAttr");
+		SilboPS.Utils.requireInstanceOf(subscriptionAttr, SilboPS.Attribute, "subscriptionAttr");
 		
-		if (notifAttr.getType() !== filterAttr.getType()) {
+		if (notifAttr.getType() !== subscriptionAttr.getType()) {
 			
 			throw new TypeError("Attributes must have same type: "
 								+ "notifAttr type="+ notifAttr.getType()
-								+ ", filterAttr type=" + filterAttr.getType());
+								+ ", subscriptionAttr type=" + subscriptionAttr.getType());
 		}
 		
 		return JSON.stringify({ "notAttr" : notifAttr.toJSON(),
-								"filterAttr" : filterAttr.toJSON() });
+								"subscriptionAttr" : subscriptionAttr.toJSON() });
 	};
 })(SilboPS);

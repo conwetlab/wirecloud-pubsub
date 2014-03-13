@@ -23,7 +23,7 @@ class PubSubPlugin(WirecloudPlugin):
             "js/lib/silbops/model/constraint.js",
             "js/lib/silbops/model/contextfunction.js",
             "js/lib/silbops/model/notification.js",
-            "js/lib/silbops/model/filter.js",
+            "js/lib/silbops/model/subscription.js",
             "js/lib/silbops/json-value.js",
             "js/lib/silbops/stream.js",
             "js/lib/silbops/silbops.js",

@@ -1,7 +1,7 @@
 /**
- * Filter: a set of constraints over attributes
+ * Subscription: a set of constraints over attributes
  * 
- * var filter = {
+ * var subscription = {
  * 		"attr1:double": [{"=" : 5.5}],
  * 		"attr2:long": [{">=" : 5}, {"<" : 10}]
  * 		"attr3:str": [{"^" : "hello"}, {"$" : "world!"}]
@@ -23,11 +23,11 @@
 	};
 	
 	/**
-	 * Creates an instance of SilboPS.Filter
+	 * Creates an instance of SilboPS.Subscription
 	 * 
 	 * @constructor
 	 */
-	SilboPS.Filter = function Filter() {
+	SilboPS.Subscription = function Subscription() {
 		
 		var that = this;
 		var _id = "";
@@ -109,7 +109,7 @@
 				return true;
 			}
 			
-			if (other instanceof SilboPS.Filter) {
+			if (other instanceof SilboPS.Subscription) {
 				
 				var thisKeys = Object.keys(_attributes);
 				var otherAttr = other.getAttributes();
@@ -177,7 +177,7 @@
 		};
 				
 		/**
-		 * Returns an Array containing the attributes of this Filter.
+		 * Returns an Array containing the attributes of this Subscription.
 		 * @returns {Array} of {Attribute}
 		 */
 		this.getAttributes = function getAttributes() {
@@ -239,16 +239,16 @@
 		};
 	};
 	
-	SilboPS.Filter.fromJSON = function fromJSON(json) {
+	SilboPS.Subscription.fromJSON = function fromJSON(json) {
 		
 		SilboPS.Utils.requireNotNull(json, "JSON object is " + json);
 		
 		var cxtFunc = SilboPS.ContextFunction.fromJSON(json["contextFunction"]);
 		var jsonConstr = json["constraints"];
 		
-		var filter = new SilboPS.Filter();
-		filter.setID(json["id"]);
-		filter.setContextFunction(cxtFunc);
+		var subscription = new SilboPS.Subscription();
+		subscription.setID(json["id"]);
+		subscription.setContextFunction(cxtFunc);
 		
 		for (var key in jsonConstr) {
 			
@@ -259,26 +259,26 @@
 				
 				var constr = SilboPS.Constraint.fromJSON(attr.getType(), constrList[i]);
 				
-				filter._addConstraint(attr, constr);
+				subscription._addConstraint(attr, constr);
 			}
 		}
 		
-		return filter;
+		return subscription;
 	};
 	
 	
 	// *************************************************************************
 	// *          C O N S T R A I N T    B U I L D E R                         *
 	// *************************************************************************
-	function ConstraintBuilder(filter, attribute) {
+	function ConstraintBuilder(subscription, attribute) {
 		
-		this._filter = SilboPS.Utils.requireInstanceOf(filter, SilboPS.Filter);
+		this._subscription = SilboPS.Utils.requireInstanceOf(subscription, SilboPS.Subscription);
 		this.constrain(attribute);
 	}
 
-	ConstraintBuilder.prototype.filter = function filter() {
+	ConstraintBuilder.prototype.subscription = function subscription() {
 
-		return this._filter;
+		return this._subscription;
 	};
 	
 	/**
@@ -288,7 +288,7 @@
 	 * 
 	 * @param name {string}             the attribute name
 	 * @param type {@link SilboPS.Type} the attribute type
-	 * @returns {ConstraintBuilder} the builder used to create the Filter.
+	 * @returns {ConstraintBuilder} the builder used to create the Subscription.
 	 */
 	ConstraintBuilder.prototype.constrain = function constrain(name, type) {
 		
@@ -305,7 +305,7 @@
 
 	ConstraintBuilder.prototype.exists = function exists() {
 
-		this._filter._addConstraint(this._attribute, SilboPS.Constraint.EXISTS);
+		this._subscription._addConstraint(this._attribute, SilboPS.Constraint.EXISTS);
 		return this;
 	};
 	
@@ -331,7 +331,7 @@
 				var val = new SilboPS.Value(this._attribute.getType(), value);
 				var cons = new SilboPS.Constraint(SilboPS.Operator[name], val);
 				
-				this._filter._addConstraint(this._attribute, cons);
+				this._subscription._addConstraint(this._attribute, cons);
 				return this;
 			};
 		})(operatorList[i]);

@@ -115,7 +115,7 @@
 	SilboPS.PubEndPoint.prototype = new EndPoint();
 	// -------------------------------------------------------------------------
 	/**
-	 * SubEndPoint is used by subscriber to send {@link SilboPS.Filter} and
+	 * SubEndPoint is used by subscriber to send {@link SilboPS.Subscription} and
 	 * to receive {@link SilboPS.Advertise} and {@link SilboPS.Notification}.
 	 * 
 	 * @param handlers the handlers to use
@@ -127,16 +127,16 @@
 		var that = this;
 		var _context = null;
 		
-		function sendSubscribe(filter, contextFunc, toSubscribe) {
+		function sendSubscribe(subscription, contextFunc, toSubscribe) {
 			
 			if (!_context) {
 				
 				that.setContext(new SilboPS.Context());
 			}
 			
-			filter.setContextFunction(contextFunc);
+			subscription.setContextFunction(contextFunc);
 			
-			SilboPS.Net.sendSubscribe(that, filter, toSubscribe);
+			SilboPS.Net.sendSubscribe(that, subscription, toSubscribe);
 		}
 		
 		this.setContext = function setContext(context) {
@@ -145,14 +145,14 @@
 			SilboPS.Net.sendContext(that, context);
 		};
 		
-		this.subscribe = function subscribe(filter, contextFunc) {
+		this.subscribe = function subscribe(subscription, contextFunc) {
 			
-			sendSubscribe(filter, contextFunc, true);
+			sendSubscribe(subscription, contextFunc, true);
 		};
 		
-		this.unsubscribe = function unsubscribe(filter, contextFunc) {
+		this.unsubscribe = function unsubscribe(subscription, contextFunc) {
 			
-			sendSubscribe(filter, contextFunc, false);
+			sendSubscribe(subscription, contextFunc, false);
 		};
 	};
 	

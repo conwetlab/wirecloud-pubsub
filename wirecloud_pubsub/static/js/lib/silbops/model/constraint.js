@@ -1,6 +1,6 @@
 /**
  * Represents a single constraint for an attribute. This class is not meant to
- * be used directly but as part of filters.
+ * be used directly but as part of subscriptions.
  * 
  * 
  * @param SilboPS the object to use as namespace root

@@ -67,16 +67,16 @@ if (!("contains" in String.prototype)) {
 	};
 	
 	/**
-     * Returns true if the arguments are equal to each other and false otherwise.
-     * Consequently, if both arguments are null or undefined, true is returned
-     * and if exactly one argument is null or undefined false is returned.
-     * Otherwise, equality is determined by using the equals method of the first
-     * argument.
-     *
-     * @param a an object
-     * @param b an object to be compared with a for equality
-     * @return true if the arguments are equal to each other, false otherwise
-     */
+	 * Returns true if the arguments are equal to each other and false otherwise.
+	 * Consequently, if both arguments are null or undefined, true is returned
+	 * and if exactly one argument is null or undefined false is returned.
+	 * Otherwise, equality is determined by using the equals method of the first
+	 * argument.
+	 * 
+	 * @param a an object
+	 * @param b an object to be compared with a for equality
+	 * @return true if the arguments are equal to each other, false otherwise
+	 */
 	SilboPS.Utils.equals = function equals(a, b) {
 		
 		var typeA = typeof a;
