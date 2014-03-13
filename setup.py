@@ -34,7 +34,7 @@ setup(
     packages=('wirecloud_pubsub',),
     include_package_data=True,
     data_files=data_files,
-    install_requires=('Wirecloud>=0.4.0b3',),
+    install_requires=('Wirecloud>=0.6.0b3',),
     tests_require=('Django',),
     classifiers=(
         'Development Status :: 3 - Alpha',
