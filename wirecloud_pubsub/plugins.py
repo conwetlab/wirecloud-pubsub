@@ -36,17 +36,18 @@ class PubSubPlugin(WirecloudPlugin):
             {'id': 'DEFAULT_SILBOPS_BROKER', 'url': settings.DEFAULT_SILBOPS_BROKER},
         )
 
-    def get_old_widget_api_extensions(self, view):
-        return (
-            'js/WirecloudAPI/PubSub/OldWidget.js',
-        )
+    def get_widget_api_extensions(self, view, features):
+        files = []
 
-    def get_widget_api_extensions(self, view):
-        return (
-            'js/WirecloudAPI/PubSub/Widget.js',
-        )
+        if 'PubSub' in features:
+            files.append('js/WirecloudAPI/PubSub/Widget.js')
 
-    def get_operator_api_extensions(self, view):
-        return (
-            'js/WirecloudAPI/PubSub/Operator.js',
-        )
+        return files
+
+    def get_operator_api_extensions(self, view, features):
+        files = []
+
+        if 'PubSub' in features:
+            files.append('js/WirecloudAPI/PubSub/Operator.js')
+
+        return files
