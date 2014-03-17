@@ -1,5 +1,5 @@
 /**
- * SilboPS handlers common method to serialize and deserialize messages
+ * SilboPS common methods to serialize and deserialize messages
  * 
  * @param SilboPS the object to use as namespace root
  * @author sergio
@@ -154,12 +154,6 @@
 		 * @param brokerURI {string} the brokerURI to use (optional)
 		 */
 		function request(action, params, brokerURI) {
-
-			var options = {};
-			options.evalJS = false;
-			options.method = "post";
-			options.parameters = params;
-			options.parameters.action = action;
 			
 			var streamID = null;
 			var stream = null;
@@ -178,15 +172,38 @@
 				brokerUri = idToBrokerUri[streamID];
 			}
 			
-			
-			// callback function to handle HTTP reply
-			options.onSuccess = function (response) {
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", brokerUri);
+			xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+			xhr.onload = function (event) {
 				
-				messageHandler(stream, { "data" : response.responseText });
+				if (xhr.readyState === XMLHttpRequest.DONE) {
+					
+					if (xhr.status >= 200 && xhr.status < 300) {
+						
+						messageHandler(stream, { "data" : xhr.responseText });
+						
+					} else {
+						throw new TypeError("Return status for " + brokerUri + " is " + xhr.status);
+					}
+				}
+				
 			};
-			
-			Wirecloud.io.makeRequest(brokerUri, options);
+			params.action = action;
+			xhr.send(toQuery(params));
 		}
+		
+		function toQuery(parameters) {
+			
+			var query = "";
+			
+			for (var key in parameters) {
+				
+				query += "&" + encodeURIComponent(key) + "=" + encodeURIComponent(parameters[key]);
+			}
+			
+			return query.replace(/^&/, "");
+	    };
 				
 		// handles dispatching and unwrapping for client's messages:
 		// (un)advertise [with context] and notification
