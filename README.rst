@@ -2,8 +2,8 @@
 Requirements
 ============
 
-* Wirecloud 0.4.0
-* A PubSub server (https://svn.forge.morfeo-project.org/4caast/trunk/WP6/pubsub)
+* Wirecloud 0.6.0
+* A PubSub server (https://github.com/conwetlab/silbops)
 
 Installation
 ------------
@@ -38,11 +38,10 @@ Usage
 
 Once wirecloud-pubsub is installed and activated, widgets and operators can
 take advantage the PubSub functionallities through the
-MashupApplication.SilboPS object. Currently, the MashupApplication.SilboPS
+MashupPlatform.SilboPS object. Currently, the MashupPlatform.SilboPS
 object only exports the PubEndPoint, SubEndPoint and Filter classes defined by
 the original javascript bindings provided by SilboPS. Full documentation of
-SilboPS is available at
-https://svn.forge.morfeo-project.org/4caast/trunk/WP6/pubsub/README.md.
+SilboPS is available at https://github.com/conwetlab/silbops.
 
 Examples
 --------
@@ -55,15 +54,23 @@ Publishing
     var endpoint;
 
     function publish() {
-        endpoint.publish({'value': 'Hello world!'});
+        var notification = new MashupPlatform.SilboPS.Notification()
+            .attribute("value", SilboPS.Type.LONG, Math.floor((Math.random() * 100) + 1))
+            .attribute("fqn", SilboPS.Type.STRING, "es.upm.fi.machine1")
+            .attribute("eventType", SilboPS.Type.STRING, "monitoring.cpu");
     }
 
     function start_publishing() {
-        endpoint.advertise({'value', ['str']});
+        var advertise = new MashupPlatform.SilboPS.Advertise()
+            .attribute("value", SilboPS.Type.LONG)
+            .attribute("fqn", SilboPS.Type.STRING)
+            .attribute("eventType", SilboPS.Type.STRING);
+
+        endpoint.advertise(advertise);
         setInterval(publish, 2000);
     }
 
-    endpoint = new MashupApplication.SilboPS.PubEndPoint({
+    endpoint = new MashupPlatform.SilboPS.PubEndPoint({
         onopen: function(endpoint) {
             alert('Endpoint ready');
             start_publishing();
@@ -81,11 +88,17 @@ Subscribing
 
     var endpoint, filter;
 
-    filter = new MashupApplication.SilboPS.Filter();
-    filter.constrain('fqn').startsWith('es.upm.fi.')
-            .constrain('eventType').eq('monitoring');
+    function create_subscription() {
+        var cxtFunc = new SilboPS.ContextFunction();
+        var subscription = new SilboPS.Subscription()
+            .constrain("fqn", SilboPS.Type.STRING).startsWith("es.upm.fi.")
+            .constrain("eventType", SilboPS.Type.STRING).eq("es.upm.fi.")
+            .subscription();
 
-    endpoint = new MashupApplication.SilboPS.SubEndPoint({
+            endpoint.subscribe(subscription, cxtFunc);
+    };
+
+    endpoint = new MashupPlatform.SilboPS.SubEndPoint({
         onopen: function (endpoint) {
             endpoint.subscribe(filter);
             alert('Endpoint ready');
@@ -95,6 +108,6 @@ Subscribing
         },
         onnotify: function (endpoint, data) {
             var notification = data.notification;
-            alert(notification.fqn);
+            alert(notification.value);
         }
     });
