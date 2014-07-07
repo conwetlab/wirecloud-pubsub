@@ -71,11 +71,11 @@ Publishing
     }
 
     endpoint = new MashupPlatform.SilboPS.PubEndPoint({
-        onopen: function(endpoint) {
+        open: function(endpoint) {
             alert('Endpoint ready');
             start_publishing();
         },
-        onclose: function(endpoint) {
+        close: function(endpoint) {
             alert('Endpoint closed');
         }
     });
@@ -99,14 +99,14 @@ Subscribing
     };
 
     endpoint = new MashupPlatform.SilboPS.SubEndPoint({
-        onopen: function (endpoint) {
+        open: function (endpoint) {
             endpoint.subscribe(filter);
             alert('Endpoint ready');
         },
-        onclose: function (endpoint) {
+        close: function (endpoint) {
             alert('Endpoint closed');
         },
-        onnotify: function (endpoint, data) {
+        notify: function (endpoint, data) {
             var notification = data.notification;
             alert(notification.value);
         }
